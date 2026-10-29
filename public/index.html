@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#080814">
+  <title>ShadowStrike | Neon Arena</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="background-grid"></div>
+  <div class="glow glow-one"></div>
+  <div class="glow glow-two"></div>
+
+  <header class="topbar">
+    <a href="#" class="brand" id="homeButton">
+      <span class="brand-icon">S</span>
+      <span>SHADOW<span class="accent">STRIKE</span></span>
+    </a>
+
+    <div class="connection">
+      <span id="connectionDot" class="status-dot"></span>
+      <span id="connectionText">CONNECTING...</span>
+    </div>
+  </header>
+
+  <main>
+    <!-- Main menu -->
+    <section id="menuScreen" class="screen active">
+      <div class="hero">
+        <div class="eyebrow">
+          <span class="eyebrow-line"></span>
+          REAL-TIME MULTIPLAYER ARENA
+        </div>
+
+        <h1>COLLECT.<br><span class="gradient-text">COMPETE.</span><br>CONQUER.</h1>
+
+        <p class="hero-description">
+          Enter the neon arena. Collect energy. Outscore your rivals.
+          Only one player takes the crown.
+        </p>
+
+        <div class="feature-tags">
+          <span>✦ REAL-TIME PvP</span>
+          <span>✦ UP TO 8 PLAYERS</span>
+          <span>✦ 2 MINUTE MATCHES</span>
+        </div>
+      </div>
+
+      <div class="panel menu-panel">
+        <div class="panel-heading">
+          <div>
+            <span class="section-label">PLAYER ACCESS</span>
+            <h2>Enter the Arena</h2>
+          </div>
+          <span class="panel-symbol">◈</span>
+        </div>
+
+        <label for="username">YOUR CODENAME</label>
+        <input
+          id="username"
+          type="text"
+          maxlength="16"
+          placeholder="Enter your username"
+          autocomplete="nickname"
+        >
+
+        <button id="createRoomButton" class="button button-primary">
+          CREATE NEW ROOM <span>↗</span>
+        </button>
+
+        <div class="separator"><span>OR JOIN A BATTLE</span></div>
+
+        <label for="roomCode">ROOM CODE</label>
+        <div class="join-row">
+          <input
+            id="roomCode"
+            type="text"
+            maxlength="4"
+            placeholder="AB7K"
+            autocomplete="off"
+          >
+          <button id="joinRoomButton" class="button button-secondary">
+            JOIN
+          </button>
+        </div>
+
+        <p id="menuMessage" class="message" role="status"></p>
+      </div>
+
+      <div class="hero-bottom">
+        <span>01 / ENTER YOUR DESTINY</span>
+        <span>POWERED BY NEON ENERGY <span class="accent">●</span></span>
+      </div>
+    </section>
+
+    <!-- Lobby -->
+    <section id="lobbyScreen" class="screen">
+      <div class="page-heading">
+        <span class="section-label">MULTIPLAYER / LOBBY</span>
+        <h1>ASSEMBLE YOUR <span class="gradient-text">SQUAD.</span></h1>
+        <p>Invite your rivals. Prepare for the ultimate showdown.</p>
+      </div>
+
+      <div class="lobby-grid">
+        <div class="panel room-panel">
+          <span class="section-label">YOUR ROOM CODE</span>
+
+          <div class="room-code-display">
+            <span id="displayRoomCode">----</span>
+            <button id="copyCodeButton" class="icon-button" title="Copy room code">
+              ⧉
+            </button>
+          </div>
+
+          <p class="muted">Share this code with your friends to let them join.</p>
+
+          <div class="lobby-stats">
+            <div>
+              <span class="stat-value" id="playerCount">1/8</span>
+              <span class="stat-label">PLAYERS</span>
+            </div>
+            <div>
+              <span class="stat-value">02:00</span>
+              <span class="stat-label">MATCH TIME</span>
+            </div>
+          </div>
+
+          <div class="lobby-tip">
+            <span>✦</span>
+            <p>The host can start the match once at least two players have joined.</p>
+          </div>
+
+          <button id="startMatchButton" class="button button-primary" disabled>
+            START MATCH <span>→</span>
+          </button>
+
+          <button id="leaveRoomButton" class="button button-ghost">
+            LEAVE ROOM
+          </button>
+
+          <p id="lobbyMessage" class="message" role="status"></p>
+        </div>
+
+        <div class="panel players-panel">
+          <div class="panel-heading">
+            <div>
+              <span class="section-label">CONNECTED PLAYERS</span>
+              <h2>Ready to Battle</h2>
+            </div>
+            <span class="live-badge"><span></span> LIVE</span>
+          </div>
+
+          <div id="playerList" class="player-list"></div>
+
+          <div class="lobby-footer">
+            <span>WAITING FOR PLAYERS</span>
+            <span class="accent">●</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Game -->
+    <section id="gameScreen" class="screen game-screen">
+      <div class="game-heading">
+        <div>
+          <span class="section-label">LIVE MATCH / SHADOWSTRIKE</span>
+          <h1>NEON <span class="gradient-text">ARENA</span></h1>
+        </div>
+
+        <div class="timer-box">
+          <span class="stat-label">TIME REMAINING</span>
+          <strong id="gameTimer">02:00</strong>
+        </div>
+      </div>
+
+      <div class="game-layout">
+        <div class="arena-wrapper">
+          <div class="arena-topbar">
+            <span><span class="status-dot"></span> LIVE ARENA</span>
+            <span>ROOM: <strong id="gameRoomCode">----</strong></span>
+          </div>
+
+          <canvas
+            id="gameCanvas"
+            width="1200"
+            height="700"
+            aria-label="Multiplayer game arena"
+          ></canvas>
+
+          <div class="arena-bottom">
+            <span>⚡ MOVE: WASD / ARROW KEYS</span>
+            <span>✦ COLLECT THE GLOWING ORBS</span>
+          </div>
+
+          <div class="controls-guide">
+            <div class="controls-title">PLAYER CONTROLS</div>
+
+          <div class="keyboard-layout">
+            <kbd>W</kbd>
+          <div class="keyboard-bottom">
+            <kbd>A</kbd>
+            <kbd>S</kbd>
+            <kbd>D</kbd>
+          </div>
+        </div>
+
+        <p>Use <strong>W A S D</strong> or the <strong>Arrow Keys</strong> to move.</p>
+        <p>Collect glowing energy orbs to increase your score!</p>
+      </div>
+        </div>
+
+        <aside class="panel scoreboard">
+          <div class="panel-heading">
+            <div>
+              <span class="section-label">LIVE RANKINGS</span>
+              <h2>Leaderboard</h2>
+            </div>
+            <span class="panel-symbol">♛</span>
+          </div>
+
+          <div id="leaderboard" class="leaderboard"></div>
+
+          <div class="scoreboard-tip">
+            <span class="accent">✦</span>
+            Collect energy orbs to increase your score.
+          </div>
+
+          <button id="gameLeaveButton" class="button button-ghost">
+            LEAVE MATCH
+          </button>
+        </aside>
+      </div>
+
+      <p id="gameMessage" class="message" role="status"></p>
+    </section>
+
+    <!-- Results -->
+    <section id="resultsScreen" class="screen results-screen">
+      <div class="results-content">
+        <span class="section-label">MATCH COMPLETE / FINAL RESULTS</span>
+        <div class="trophy">♛</div>
+        <h1>ARENA <span class="gradient-text">CONQUERED.</span></h1>
+        <p class="muted">The battle is over. Here's how everyone performed.</p>
+
+        <div id="winnerCard" class="winner-card"></div>
+
+        <div class="panel results-panel">
+          <h2>FINAL LEADERBOARD</h2>
+          <div id="finalLeaderboard" class="leaderboard"></div>
+        </div>
+
+        <button id="playAgainButton" class="button button-primary">
+          PLAY AGAIN <span>↗</span>
+        </button>
+
+        <button id="resultsLeaveButton" class="button button-ghost">
+          RETURN TO MAIN MENU
+        </button>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <span>SHADOWSTRIKE © 2026</span>
+    <span>COLLECT. COMPETE. CONQUER.</span>
+  </footer>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="game.js"></script>
+</body>
+</html>
